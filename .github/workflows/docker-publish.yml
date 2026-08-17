@@ -28,3 +28,9 @@ jobs:
           context: ./leads-service
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/leads-service:latest
+
+      - name: Trigger Render redeploy
+        run: |
+          curl -sf -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json"
